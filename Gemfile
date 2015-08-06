@@ -55,3 +55,5 @@ end
 gem 'rails_12factor', group: :production
 
 gem 'guard-rspec', group: :development, require: false
+
+gem 'bootstrap-sass'

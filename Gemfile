@@ -55,7 +55,13 @@ group :development, :test do
   gem 'capybara', '~> 2.2'
 end
 
-gem 'rails_12factor', group: :production
+group :production do
+  # For heroku deploy
+  gem 'rails_12factor'
+
+  # Use puma as production web server
+  gem 'puma'
+end
 
 gem 'guard-rspec', group: :development, require: false
 

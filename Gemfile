@@ -50,6 +50,9 @@ group :development, :test do
 
   # Use pry-remote due to using powder
   gem 'pry-remote'
+
+  # Use capybara for test
+  gem 'capybara', '~> 2.2'
 end
 
 gem 'rails_12factor', group: :production

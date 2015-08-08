@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Users", type: :feature do
-    it "signs me up with valid information" do
+  it "signs me up with valid information" do
     visit '/users/new'
     expect do
       fill_in 'Name', with: 'Test User'

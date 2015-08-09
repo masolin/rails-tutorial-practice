@@ -68,3 +68,9 @@ gem 'guard-rspec', group: :development, require: false
 gem 'bootstrap-sass'
 
 gem 'bcrypt'
+
+gem 'faker'
+
+gem 'will_paginate'
+
+gem 'bootstrap-will_paginate', '0.0.10'

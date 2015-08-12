@@ -1,14 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Sessions", type: :feature do
-  before :each do
-    visit '/signup'
-    fill_in 'Name', with: 'Michael Example'
-    fill_in 'Email', with: 'michael@example.com'
-    fill_in 'Password', with: 'password'
-    fill_in 'Password Confirmation', with: 'password'
-    click_button 'Create My Account'
-  end
+  fixtures :users
 
   it 'cleans flash after existing login fail page' do
     visit '/login'
@@ -21,8 +14,9 @@ RSpec.feature "Sessions", type: :feature do
   end
 
   it 'renders correct user#show page after login' do
+    user = users(:michael)
     visit '/login'
-    fill_in 'Email', with: 'michael@example.com'
+    fill_in 'Email', with: user.email
     fill_in 'Password', with: 'password'
     click_button 'Log in'
     expect(page).not_to have_link('Log in', href: login_path)

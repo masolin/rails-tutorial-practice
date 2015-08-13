@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  fixtures :users
+  fixtures :microposts
+
   before :each do
-    @user = User.new(name: 'Example User', email: 'user@example.com',
-      password: 'foobar', password_confirmation: 'foobar')
+    @user = users(:michael)
   end
 
   it 'should be valid' do
@@ -63,5 +65,32 @@ RSpec.describe User, type: :model do
   it 'is invalid with too short password' do
     @user.password = @user.password_confirmation = 'a' * 5
     expect(@user).not_to be_valid
+  end
+
+  it "should follow and unfollow a user" do
+    archer  = users(:archer)
+    expect(@user.following?(archer)).not_to be true
+    @user.follow(archer)
+    expect(@user.following?(archer)).to be true
+    expect(archer.followers).to include(@user)
+    @user.unfollow(archer)
+    expect(@user.following?(archer)).not_to be true
+  end
+
+  it "should display feed with right posts" do
+    archer  = users(:archer)
+    lana    = users(:lana)
+    @user.follow(lana)
+    lana.microposts.each do |post_following|
+      expect(@user.feed).to include(post_following)
+    end
+
+    @user.microposts.each do |post_self|
+      expect(@user.feed).to include(post_self)
+    end
+
+    archer.microposts.each do |post_unfollowed|
+      expect(@user.feed).not_to include(post_unfollowed)
+    end
   end
 end
